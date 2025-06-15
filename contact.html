@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact - TLT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #011d1a;
+      color: white;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 60px auto 30px;
+      background: #012e2a;
+      border-radius: 16px;
+      padding: 30px 20px;
+      box-shadow: 0 0 15px #00ffae55;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00ffae;
+      margin-bottom: 20px;
+    }
+
+    form input,
+    form textarea {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      background: #011d1a;
+      border: 2px solid #00ffae44;
+      border-radius: 10px;
+      color: white;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    form input:focus,
+    form textarea:focus {
+      border-color: #00ffae;
+      outline: none;
+    }
+
+    form button {
+      width: 100%;
+      background: #00ffae;
+      color: #012e2a;
+      border: none;
+      padding: 14px;
+      font-weight: bold;
+      font-size: 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    form button:hover {
+      background: transparent;
+      color: #00ffae;
+      border: 2px solid #00ffae;
+    }
+
+    footer {
+      background:#012825;
+      padding:20px;
+      text-align:center;
+    }
+
+    footer a {
+      margin:0 10px;
+      color:white;
+      text-decoration:none;
+      font-size:13px;
+    }
+
+    footer i {
+      color:#00ffae;
+      margin:0 6px;
+      font-size:16px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 30px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Contact Us</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+  <!-- Telegram Form Script -->
+  <script>
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = form.querySelector("input[placeholder='Your Name']").value;
+      const email = form.querySelector("input[placeholder='Your Email']").value;
+      const message = form.querySelector("textarea").value;
+
+      const telegramBotToken = "8192818867:AAEOo_uASG5buZTyi3zwJ_VSOTEsy1Xf5Yg"; // Your bot token
+      const telegramChatId = "6345244711"; // Your chat ID
+
+      const telegramMessage = `📥 *New Contact Message* \n\n👤 *Name:* ${name}\n📧 *Email:* ${email}\n📝 *Message:* ${message}`;
+
+      fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          chat_id: telegramChatId,
+          text: telegramMessage,
+          parse_mode: "Markdown",
+        }),
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok) {
+          alert("Message sent successfully to Telegram ✅");
+          form.reset();
+        } else {
+          alert("Error sending message ❌");
+        }
+      })
+      .catch((err) => {
+        alert("Network error ❌");
+        console.error(err);
+      });
+    });
+  </script>
+
+  <!-- Start: Footer -->
+  <footer>
+    <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:10px;">
+      <img src="images/tlt.png" alt="Logo" style="width:35px; height:35px; border-radius:8px;">
+      <span style="font-size:18px; font-weight:600; color:#00ffae;">TLT.COM</span>
+    </div>
+
+    <div style="margin-bottom:10px;">
+      <a href="index.html">Home</a>
+      <a href="games.html">Games</a>
+      <a href="offers.html">Offers</a>
+      <a href="contact.html">Contact</a>
+      <a href="terms.html">Terms & Condishan</a>
+      <a href="about.html">Abouts Us</a>
+    </div>
+
+    <div style="margin-top:10px;">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-telegram"></i></a>
+    </div>
+
+    <div style="margin-top:12px; font-size:12px; color:#aaa;"> 
+      &copy; 2025 TLT.COM. All rights reserved.
+    </div>
+  </footer>
+  <!-- End: Footer -->
+
+</body>
+</html>
+
